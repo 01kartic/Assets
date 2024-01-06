@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacts</title>
+    <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Onest', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        p {
+            font-family: 'Onest', sans-serif;
+            font-size: 32px;
+            font-weight: 800;
+            margin: 0;
+            margin-top: 16px;
+        }
+        #downloadButton {
+            font-family: 'Onest', sans-serif;;
+            margin-top: 26px;
+            padding: 16px 32px;
+            font-size: 16px;
+            border-radius: 10px;
+            border: none;
+            background-color: black;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="main">
+        <img src="./Images/ContactsApp.png" alt="Contacts" width="96" height="96">
+        <p>Contacts</p>
+        <button id="downloadButton" onclick="downloadImage()">Download Android App</button>
+    </div>
+    <script>
+        function downloadImage() {
+            var imageUrl = 'https://kartikbambhaniya.github.io/Assets/Apps/Contacts.apk';
+            var downloadLink = document.createElement('a');
+            downloadLink.href = imageUrl;
+            downloadLink.download = 'https://kartikbambhaniya.github.io/Assets/Apps/Contacts.apk';
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+            document.getElementById('downloadButton').innerHTML = 'Download Started';
+        }
+    </script>
+</body>
+</html>
