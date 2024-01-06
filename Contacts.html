@@ -49,10 +49,10 @@
     </div>
     <script>
         function downloadImage() {
-            var imageUrl = 'https://kartikbambhaniya.github.io/Assets/Apps/Contacts.apk';
+            var imageUrl = './Apps/Contacts.apk';
             var downloadLink = document.createElement('a');
             downloadLink.href = imageUrl;
-            downloadLink.download = 'https://kartikbambhaniya.github.io/Assets/Apps/Contacts.apk';
+            downloadLink.download = './Apps/Contacts.apk';
             document.body.appendChild(downloadLink);
             downloadLink.click();
             document.body.removeChild(downloadLink);
