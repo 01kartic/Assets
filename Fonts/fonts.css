@@ -1,0 +1,89 @@
+@font-face {
+    font-family: "Product Snas";
+    src: url("./Product Sans/ProductSans-Light.ttf") format("ttf");
+    font-weight: 200;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Product Snas";
+    src: url("./Product Sans/ProductSans-LightItalic.ttf") format("ttf");
+    font-weight: 200;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "Product Snas";
+    src: url("./Product Sans/ProductSans-Thin.ttf") format("ttf");
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Product Snas";
+    src: url("./Product Sans/ProductSans-ThinItalic.ttf") format("ttf");
+    font-weight: 300;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "Product Snas";
+    src: url("./Product Sans/ProductSans-Regular.ttf") format("ttf");
+    font-weight: normal;
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Product Snas";
+    src: url("./Product Sans/ProductSans-Italic.ttf") format("ttf");
+    font-weight: normal;
+    font-weight: 400;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "Product Snas";
+    src: url("./Product Sans/ProductSans-Medium.ttf") format("ttf");
+    font-weight: medium;
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Product Snas";
+    src: url("./Product Sans/ProductSans-MediumItalic.ttf") format("ttf");
+    font-weight: medium;
+    font-weight: 500;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "Product Snas";
+    src: url("./Product Sans/ProductSans-Bold.ttf") format("ttf");
+    font-weight: bold;
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Product Snas";
+    src: url("./Product Sans/ProductSans-BoldItalic.ttf") format("ttf");
+    font-weight: bold;
+    font-weight: 600;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "Product Snas";
+    src: url("./Product Sans/ProductSans-Black.ttf") format("ttf");
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Product Snas";
+    src: url("./Product Sans/ProductSans-BlackItalic.ttf") format("ttf");
+    font-weight: 700;
+    font-style: italic;
+}
