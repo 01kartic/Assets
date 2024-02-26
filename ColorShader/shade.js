@@ -393,3 +393,55 @@ function createPart(headingName, hexCode, colorName) {
 
     gallery.appendChild(divPart);
 }
+
+
+// JS for About
+
+window.addEventListener("load", () => {
+    document.getElementById("about").innerHTML = `
+        <div class='card bg-transparent figma-text border-dashed m-5 px-5 py-4 rounded-5 text-center'>
+            <img src='https://01kartic.github.io/Assets/Images/ColorShader.png' alt='Color Shader Logo' width='64'
+                class='mx-auto my-3'>
+            <p class='mb-2'>Contribute colors in our <strong>Color Gallery</strong>.</p>
+            <p>Share your Color Colloection with us and help us to improove the Gallery.</p>
+            <a href='' class='btn btn-primary px-2 rounded-pill w-33 py-2 m-auto' target='_blank'>Contribute Here</a>
+        </div>
+
+        <div class='mx-5'>
+            <h3 class='mb-3'>About</h3>
+            <p class='mb-1'>-&nbsp; Elevate your design process with the Figma Color Shader Plugin.</p>
+            <p class='mb-1'>-&nbsp; Seamlessly navigate the spectrum, effortlessly generating vibrant color Shades.</p>
+            <p class='mb-1'>-&nbsp; Unleash creativity and streamline your workflow.</p>
+            <p class='mb-1'>-&nbsp; It has features which provide you to create shade with <b>Choosing Color</b>, <b>with Hex
+                    code</b> or you can use <b>Color Gallery</b>.</p>
+            <h3 class='mt-5 mb-3'>How to use ??</h3>
+            <ol>
+                <li>
+                    <b>Choosing Color</b><br />
+                    <p class='mb-1'>-&nbsp; Use the slider to choose the color and click on the shade which you want to see & add
+                        it to the <b>Color Panel</b>.</p>
+                    <p>-&nbsp; From <b>Color Panel</b> you can either <b>Copy Hex code</b> or direct <b>Add color to
+                            Canvas</b>(One shape that filled with that color).</p>
+                </li>
+                <li>
+                    <b>Using Hex code</b><br />
+                    <p class='mb-1'>-&nbsp; Enter the Hex code and click on the shade which you want see & add it to the <b>Color
+                            Panel</b>.</p>
+                    <p>-&nbsp; From <b>Color Panel</b> you can either <b>Copy Hex code</b> or direct <b>Add color to
+                            Canvas</b>(One shape that filled with that color).</p>
+                </li>
+                <li>
+                    <b>Color Gallery</b><br />
+                    <p class='mb-1'>-&nbsp; From the <b>Gallery</b> hover on color which you want & see Name of that Color & Hex
+                        code.</p>
+                    <p>-&nbsp; you can either <b>Copy Hex code</b> or direct <b>Add color to Canvas</b>(One shape that filled with
+                        that color).</p>
+                </li>
+            </ol>
+        </div>
+
+        <div class='text-center my-3 py-5'>
+            <h1 class='Honk'>Thank you for using !!</h1>
+        </div>
+        `;
+});
