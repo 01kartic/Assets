@@ -26,5 +26,16 @@
         { "name": "Color3", "hex": "#00ffff" }
       ]
     }
+    {
+      "name": "Alternate of Black",
+      "colors": [
+        { "name": "hf", "hex": "#ff5600" },
+        { "name": "fhf", "hex": "#00ff66" },
+        { "name": "gfhy", "hex": "#0140ff" },
+        { "name": "gfh", "hex": "#463245" },
+        { "name": "gfh", "hex": "#653211" },
+        { "name": "gfh", "hex": "#312654" }
+      ]
+    },
   ]
   
