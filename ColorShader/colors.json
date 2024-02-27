@@ -1,0 +1,30 @@
+[
+    {
+      "name": "Alternate of White",
+      "colors": [
+        { "name": "Red", "hex": "#ff0000" },
+        { "name": "Green", "hex": "#00ff00" },
+        { "name": "Blue", "hex": "#0000ff" }
+      ]
+    },
+    {
+      "name": "Alternate of Black",
+      "colors": [
+        { "name": "hf", "hex": "#ff5600" },
+        { "name": "fhf", "hex": "#00ff66" },
+        { "name": "gfhy", "hex": "#0140ff" },
+        { "name": "gfh", "hex": "#463245" },
+        { "name": "gfh", "hex": "#653211" },
+        { "name": "gfh", "hex": "#312654" }
+      ]
+    },
+    {
+      "name": "Example Colors",
+      "colors": [
+        { "name": "Color1", "hex": "#ffffff" },
+        { "name": "Color2", "hex": "#ff00ff" },
+        { "name": "Color3", "hex": "#00ffff" }
+      ]
+    }
+  ]
+  
