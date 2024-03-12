@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Portfolio</title>
+
+        <link href="https://fonts.googleapis.com/css2?family=Honk&family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
+                rel="stylesheet" />
+
+        <style>
+                * {
+                        font-family: "Inter", sans-serif;
+                }
+
+                body {
+                        background-color: #00000E;
+                        color: #fff;
+                        margin: 0;
+                        padding: 0;
+                        box-sizing: border-box;
+
+                        &::-webkit-scrollbar {
+                                width: 0;
+                        }
+                }
+
+                .Gradient {
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                        z-index: -1;
+                }
+
+                .navbar {
+                        padding: 0.25rem 0;
+                        margin: 3rem 8rem 0;
+                        padding: 0 2rem;
+                        position: fixed;
+                        width: calc(100% - 20rem);
+                        z-index: 100;
+                        border-radius: 1.2rem;
+                        backdrop-filter: blur(32px);
+                }
+
+                .container {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                }
+
+                .logo h2 {
+                        color: #fff;
+                        font-weight: 700;
+                }
+
+                .menu ul {
+                        display: flex;
+                        list-style: none;
+                }
+
+                .menu ul li {
+                        margin: 0 0.5rem;
+                }
+
+                .menu ul li a {
+                        color: #fff;
+                        text-decoration: none;
+                        font-weight: 400;
+                }
+
+                .social img {
+                        margin: 0 0.25rem;
+                        width: 32px;
+                }
+
+                .home {
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: center;
+                        height: 100vh;
+                        text-align: center;
+                }
+
+                .home h1 {
+                        font-size: 7rem;
+                        font-weight: 700;
+                }
+
+                .home p {
+                        font-size: 1.25rem;
+                        font-weight: 500;
+                        margin-top: -2rem;
+                }
+
+                .home button {
+                        padding: 0.75rem 1.2rem;
+                        margin-top: 1rem;
+                        background-color: #18a0fb;
+                        color: #fff;
+                        border: 1px solid #44444410;
+                        border-radius: 0.75rem;
+                        font-size: 1rem;
+                        font-weight: 500;
+                        cursor: pointer;
+                }
+
+                .bento-1 {
+                        float: left;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: center;
+                        text-align: center;
+                        border: 4px solid #ffffff50;
+                        border-radius: 2rem;
+                        padding: 1.5rem;
+                        width: 14rem;
+                        height: 10rem;
+                }
+
+                .bento-2 {
+                        float: left;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: center;
+                        text-align: center;
+                        border: 4px solid #ffffff50;
+                        border-radius: 2rem;
+                        padding: 1.5rem;
+                        width: 24rem;
+                        height: 10rem;
+                }
+
+                .bento-1 h1,
+                .bento-2 h1 {
+                        font-size: 4rem;
+                        font-weight: 900;
+                        line-height: 0.5;
+                        padding-bottom: 0.75rem;
+                }
+
+                .bento-1 p,
+                .bento-2 p {
+                        font-size: 1.25rem;
+                        font-weight: 500;
+                        line-height: 0.5;
+                }
+        </style>
+</head>
+
+<body>
+        <svg class="Gradient" viewBox="0 0 2056 1144" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#clip0_15_7)">
+                        <g opacity="0.25">
+                                <g filter="url(#filter0_f_15_7)">
+                                        <path d="M1393.39 -100H662V672.807H1393.39V-100Z" fill="#18A0FB" />
+                                </g>
+                        </g>
+                </g>
+                <defs>
+                        <filter id="filter0_f_15_7" x="287" y="-475" width="1481.39" height="1522.81"
+                                filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                                <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                                <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+                                <feGaussianBlur stdDeviation="187.5" result="effect1_foregroundBlur_15_7" />
+                        </filter>
+                        <clipPath id="clip0_15_7">
+                                <rect width="2056" height="1144" fill="white" />
+                        </clipPath>
+                </defs>
+        </svg>
+        <div class="navbar">
+                <div class="container">
+                        <div class="logo">
+                                <h2>Portfolio</h2>
+                        </div>
+                        <div class="menu">
+                                <ul>
+                                        <li><a href="#home">Home</a></li>
+                                        <li><a href="#about">Blog</a></li>
+                                        <li><a href="#services">About</a></li>
+                                        <li><a href="#contact">Contact us</a></li>
+                                </ul>
+                        </div>
+                        <div class="social">
+                                <img src="https://img.icons8.com/fluency/128/linkedin.png" alt="linkedin" />
+                                <img src="https://img.icons8.com/fluency/128/twitterx--v1.png" alt="twitterx--v1" />
+                                <img src="https://img.icons8.com/fluency/128/instagram-new.png" alt="instagram-new" />
+                        </div>
+                </div>
+        </div>
+
+        <section class="home">
+                <h1>Let's Fly<br>Together</h1>
+                <p>Grow your business with our expert </p>
+                <button>Contact us</button>
+        </section>
+        <section class="home">
+                <div style="margin-bottom: 3rem">
+                        <div class="bento-1" style="margin-right: 3rem;">
+                                <h1>100+</h1>
+                                <p>Projects</p>
+                        </div>
+                        <div class="bento-2">
+                                <h1>84+</h1>
+                                <p>Succesful Projects</p>
+                        </div>
+                </div>
+                <div>
+                        <div class="bento-2" style="margin-right: 3rem;">
+                                <h2>Let's collabrate</h2>
+                        </div>
+                        <div class="bento-1">
+                                <h1>23+</h1>
+                                <p>Clients</p>
+                        </div>
+                </div>
+        </section>
+</body>
+
+</html>
