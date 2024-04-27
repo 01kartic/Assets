@@ -1,63 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="./Images/ContactsApp.png">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="./Images/ContactsApp.png" />
     <title>Contacts App</title>
-    <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body {
-            font-family: 'Onest', sans-serif;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .main {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-        p {
-            font-family: 'Onest', sans-serif;
-            font-size: 32px;
-            font-weight: 800;
-            margin: 0;
-            margin-top: 16px;
-        }
-        #downloadButton {
-            font-family: 'Onest', sans-serif;;
-            margin-top: 26px;
-            padding: 16px 32px;
-            font-size: 16px;
-            border-radius: 10px;
-            border: none;
-            background-color: black;
-            color: white;
-            cursor: pointer;
-        }
+      * {
+        font-family: "Inter", sans-serif;
+      }
     </style>
-</head>
-<body>
-    <div class="main">
-        <img src="./Images/ContactsApp.png" alt="Contacts" width="96" height="96">
-        <p>Contacts</p>
-        <button id="downloadButton" onclick="downloadImage()">Download Android App</button>
+  </head>
+
+  <body class="flex align-center justify-center h-screen m-0">
+    <div class="flex flex-col align-center justify-center text-center">
+      <img
+        src="./Images/ContactsApp.png"
+        alt="Contacts"
+        class="w-[64px] mx-auto rounded-2xl"
+      />
+      <p class="text-2xl font-bold mt-4">Contacts</p>
+      <p class="w-72 sm:w-80 mx-auto mt-5 mb-8">
+        A simple Contacts App where you can store your contacts with a person's
+        photo. You can edit your contact & able to call them directly. Created
+        with <strong>Flutter</strong>.
+      </p>
+      <button
+        id="downloadButton"
+        onclick="downloadImage()"
+        class="inline-flex justify-center item-center w-64 sm:1/4 bg-black text-white text-center rounded-xl p-3 mx-auto"
+      >
+        Download Android App
+      </button>
     </div>
     <script>
-        function downloadImage() {
-            var imageUrl = './Apps/Contacts.apk';
-            var downloadLink = document.createElement('a');
-            downloadLink.href = imageUrl;
-            downloadLink.download = './Apps/Contacts.apk';
-            document.body.appendChild(downloadLink);
-            downloadLink.click();
-            document.body.removeChild(downloadLink);
-            document.getElementById('downloadButton').innerHTML = 'Download Started';
-        }
+      // onclick show proccess for 3 seconds then download the file and change the button text
+      function downloadImage() {
+        document.getElementById("downloadButton").innerHTML =
+          "<svg class='animate-spin -ml-1 mr-3 h-5 w-5 text-white' xmlns='http://www.w3.org/2000/svg' fill='none' viewBox = '0 0 24 24' > <circle class='opacity-25' cx='12' cy='12' r='10' stroke='currentColor' stroke-width='4'></circle> <path class='opacity-75' fill='currentColor' d='M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z'></path></svg> Proccessing...";
+        setTimeout(() => {
+          var imageUrl = "./Apps/Contacts.apk";
+          var downloadLink = document.createElement("a");
+          downloadLink.href = imageUrl;
+          downloadLink.download = "./Apps/Contacts.apk";
+          document.body.appendChild(downloadLink);
+          downloadLink.click();
+          document.body.removeChild(downloadLink);
+          document.getElementById("downloadButton").innerHTML =
+            "Download Started";
+        }, 3000);
+      }
     </script>
-</body>
+  </body>
 </html>
