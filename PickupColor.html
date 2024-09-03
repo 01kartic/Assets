@@ -564,9 +564,12 @@
                     });
                 } else {
                     alert('EyeDropper API is not supported in your browser.');
-                    eyedropper.classList.add('hidden');
                 }
             });
+
+            if (window.EyeDropper) {
+                eyedropper.classList.remove('hidden');
+            }
 
             dropdownButton.addEventListener("click", () => {
                 const isExpanded = dropdownButton.getAttribute("aria-expanded") === "true";
