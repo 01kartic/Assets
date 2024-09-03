@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pickup Color</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --selected-hue: #ff0000;
+            --selected-color: #ff1234;
+            --selected-color-opacity: #ff0000ff;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        #hueSlider {
+            -webkit-appearance: none;
+            appearance: none;
+            background: linear-gradient(to right, #ff0000, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff, #ff0000);
+        }
+
+        #hueSlider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 4px solid white;
+            outline: 0.5px rgba(0, 0, 0, 0.12);
+            box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.25);
+            background: var(--selected-hue);
+            cursor: grab;
+            position: relative;
+            z-index: 4;
+        }
+
+        #opacitySlider {
+            -webkit-appearance: none;
+            appearance: none;
+            position: relative;
+            background: none;
+            overflow: hidden;
+        }
+
+        #opacitySlider::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='15' height='15' viewBox='0 0 15 15'%3E%3Crect width='15' height='15' fill='%23D6D6D6' fill-opacity='0.4' /%3E%3Crect width='7.5' height='7.5' fill='white'/%3E%3Crect x='7.5' y='7.5' width='7.5' height='7.5' fill='white'/%3E%3C/svg%3E");
+            z-index: 1;
+        }
+
+        #opacitySlider::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(255, 0, 0, 0), var(--selected-color));
+            z-index: 2;
+        }
+
+        #opacitySlider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 4px solid white;
+            outline: 0.5px rgba(0, 0, 0, 0.12);
+            box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.25);
+            background: var(--selected-color-opacity);
+            cursor: grab;
+            position: relative;
+            z-index: 4;
+        }
+
+        #opacitySlider::-webkit-slider-thumb::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+        }
+
+        #hueSlider::-webkit-slider-thumb:active,
+        #opacitySlider::-webkit-slider-thumb:active,
+        #colorHandle:active {
+            cursor: grabbing;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 flex justify-center h-screen py-16 m-0">
+    <div id="colorSelectorWrapper" class="relative inline-block">
+        <div id="colorSelector" class="group w-40 h-10 rounded-xl flex items-center bg-white border">
+            <div id="selectedColorPreview" class="flex-shrink-0 w-10 h-10 border rounded-l-xl cursor-pointer">
+            </div>
+            <input id="selectedColor"
+                class="w-full h-full leading-none text-sm uppercase p-2 rounded-r-xl focus:outline-none focus:text-black/80"
+                value="#FF0000">
+        </div>
+        <div id="colorPicker" class="w-64 h-fit bg-white shadow-xl rounded-[20px] absolute top-fit left-0 mt-1 hidden">
+            <div class="flex justify-between items-center m-3 gap-2">
+                <div id="currentColor" class="w-7 h-7 flex-shrink-0 rounded-lg ring-1 ring-black/10"></div>
+                <input id="colorCode" type="text"
+                    class="w-full flex-grow-0 rounded-lg px-2.5 py-2 text-[10px] border leading-none focus:outline-none focus:border-black/30"
+                    value="#FF0000FF">
+                <div class="relative inline-block flex-shrink-0">
+                    <button type="button" id="dropdownButton" aria-haspopup="listbox" aria-expanded="false"
+                        class="w-16 flex items-center justify-between bg-white border rounded-lg px-2.5 py-2 text-[10px] leading-none cursor-pointer focus:border-black/30">
+                        <span>Hex</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
+                            <path
+                                d="M3.7603 4.64331L6.00145 6.88444L8.24257 4.64331C8.48663 4.39926 8.88232 4.39926 9.12645 4.64331C9.15695 4.67387 9.18363 4.70675 9.20651 4.74137C9.3667 4.984 9.34001 5.31369 9.12645 5.52725L6.44338 8.21031C6.32613 8.3275 6.1672 8.39331 6.00145 8.39331C5.83563 8.39331 5.6767 8.3275 5.55951 8.21031L2.87642 5.52725C2.63234 5.28312 2.63234 4.88744 2.87642 4.64331C2.90693 4.61283 2.93981 4.58614 2.97447 4.56326C3.21706 4.40308 3.54673 4.42977 3.7603 4.64331Z"
+                                fill="black" />
+                        </svg>
+                    </button>
+                    <ul id="dropdownOptions"
+                        class="absolute w-full top-full z-10 mt-1 bg-white shadow-md rounded-lg p-0.5 text-[10px] border border-black/5 overflow-auto focus:outline-none hidden"
+                        tabindex="-1" role="listbox">
+                        <li class="cursor-pointer select-none relative px-1.5 py-1 mb-1 rounded-md hover:bg-sky-100"
+                            data-value="1">Hex</li>
+                        <li class="cursor-pointer select-none relative px-1.5 py-1 rounded-md hover:bg-sky-100"
+                            data-value="2">RGB</li>
+                        <li class="cursor-pointer select-none relative px-1.5 py-1 mb-1 rounded-md hover:bg-sky-100"
+                            data-value="3">HSL</li>
+
+                        <li class="cursor-pointer select-none relative px-1.5 py-1 rounded-md hover:bg-sky-100"
+                            data-value="4">HSV</li>
+                    </ul>
+                </div>
+            </div>
+            <div id="errorMessage" class="hidden flex items-center gap-1.5 bg-red-50 px-2 py-1.5 rounded-lg mx-3 my-2">
+                <svg class="fill-red-400" width="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M13.0516 7.64648C13.0598 7.36471 12.8337 7.13182 12.5518 7.13182H11.4486C11.1666 7.13182 10.9403 7.36495 10.9488 7.64685L11.1105 13.0215C11.1115 13.0553 11.1159 13.0882 11.1232 13.1199C11.1747 13.342 11.3738 13.5065 11.6103 13.5065H12.3942C12.6646 13.5065 12.886 13.2914 12.8939 13.0211L13.0516 7.64648Z" />
+                    <path
+                        d="M11.1874 16.7391C11.4143 16.9628 11.686 17.0746 12.0024 17.0746C12.2069 17.0746 12.3955 17.0235 12.5681 16.9212C12.7407 16.8158 12.8797 16.6767 12.9852 16.5042C13.0938 16.3284 13.1498 16.135 13.153 15.9241C13.1498 15.6109 13.0331 15.3424 12.803 15.1187C12.5729 14.895 12.306 14.7831 12.0024 14.7831C11.686 14.7831 11.4143 14.895 11.1874 15.1187C10.9605 15.3424 10.8486 15.6109 10.8518 15.9241C10.8486 16.2405 10.9605 16.5121 11.1874 16.7391Z" />
+                    <path fill-rule="evenodd" clip-rule="evenodd"
+                        d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22ZM12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20Z" />
+                </svg>
+                <p class="text-red-400 text-xs">This is error.</p>
+            </div>
+            <div id="colorGradient" class="w-full h-64 relative">
+                <div id="colorHandle"
+                    class="absolute w-5 h-5 rounded-full border-4 border-white shadow-3xl transform -translate-x-1/2 -translate-y-1/2 cursor-grab">
+                </div>
+            </div>
+            <div class="w-full flex justify-between items-center p-3 gap-3">
+                <button id="eyedropper" class="rounded-xl hover:bg-black/5">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36" fill="none">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M14.7063 13.6953C14.0267 14.3749 14.0267 15.4768 14.7063 16.1564L14.8826 16.3328L11.0194 20.196C10.3667 20.8487 10 21.734 10 22.6571V25.1311C10 25.6116 10.3896 26.0013 10.8701 26.0013H13.3441C14.2672 26.0013 15.1525 25.6345 15.8053 24.9818L19.6685 21.1186L19.8448 21.2949C20.5244 21.9745 21.6263 21.9745 22.306 21.2949L23.4945 20.1063C24.1739 19.427 24.1742 18.3256 23.4953 17.646L23.3181 17.4688L25.0101 15.777C26.3316 14.4554 26.3316 12.3127 25.0101 10.9911C23.6885 9.66958 21.5458 9.66958 20.2242 10.9911L18.5323 12.683L18.3561 12.5067C17.6764 11.8271 16.5745 11.8271 15.8949 12.5067L14.7063 13.6953ZM18.4379 19.888L16.1132 17.5633L12.25 21.4265C11.9236 21.7529 11.7403 22.1956 11.7403 22.6571V24.261H13.3441C13.8057 24.261 14.2483 24.0775 14.5747 23.7512L18.4379 19.888Z"
+                            fill="black" />
+                        <path
+                            d="M18.4379 19.888L16.1132 17.5633L12.25 21.4265C11.9236 21.7529 11.7403 22.1956 11.7403 22.6571V24.261H13.3441C13.8057 24.261 14.2483 24.0775 14.5747 23.7512L18.4379 19.888Z"
+                            fill="white" />
+                    </svg>
+                </button>
+                <div class="w-full flex flex-col gap-2">
+                    <input type="range" id="hueSlider" min="0" max="1" step="0.01" class="w-full h-5 rounded-full">
+                    <input type="range" id="opacitySlider" min="0" max="1" step="0.01" class="w-full h-5 rounded-full">
+                </div>
+            </div>
+            <div class="flex flex-col p-4 border-t border-black/10 gap-2">
+                <div class="flex items-center justify-between">
+                    <p class="text-[12px]">Recently Used</p>
+                    <div class="group flex cursor-pointer" id="clearRecents">
+                        <p class="hidden group-hover:block text-[10px] opacity-50 mr-1">Clear recent</p>
+                        <svg class="flex-shrink-0 fill-black group-hover:fill-red-500" id="clearRecents" width="16"
+                            viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M10 10C10.4142 10 10.75 10.3358 10.75 10.75V16.25C10.75 16.6642 10.4142 17 10 17C9.58579 17 9.25 16.6642 9.25 16.25V10.75C9.25 10.3358 9.58579 10 10 10Z" />
+                            <path
+                                d="M14.75 10.75C14.75 10.3358 14.4142 10 14 10C13.5858 10 13.25 10.3358 13.25 10.75V16.25C13.25 16.6642 13.5858 17 14 17C14.4142 17 14.75 16.6642 14.75 16.25V10.75Z" />
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M7.5 5V3.5C7.5 2.39543 8.39543 1.5 9.5 1.5H14.5C15.6046 1.5 16.5 2.39543 16.5 3.5V5L21.25 5C21.6642 5 22 5.33579 22 5.75C22 6.16421 21.6642 6.5 21.25 6.5H19.9118L19.1107 20.1174C19.0486 21.1746 18.1731 22 17.1142 22H6.88581C5.82686 22 4.95145 21.1746 4.88926 20.1174L4.08824 6.5H2.75C2.33579 6.5 2 6.16421 2 5.75C2 5.33579 2.33579 5 2.75 5L7.5 5ZM9.5 3H14.5C14.7761 3 15 3.22386 15 3.5V5H9V3.5C9 3.22386 9.22386 3 9.5 3ZM5.59083 6.5L6.38667 20.0294C6.40222 20.2936 6.62107 20.5 6.88581 20.5H17.1142C17.3789 20.5 17.5978 20.2936 17.6133 20.0294L18.4092 6.5H5.59083Z" />
+                        </svg>
+
+                    </div>
+                </div>
+                <div id="recentColors" class="flex flex-wrap gap-2"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const currentColor = document.getElementById('currentColor');
+            const colorCode = document.getElementById('colorCode');
+            const colorGradient = document.getElementById('colorGradient');
+            const colorHandle = document.getElementById('colorHandle');
+            const hueSlider = document.getElementById('hueSlider');
+            const opacitySlider = document.getElementById('opacitySlider');
+            const eyedropper = document.getElementById('eyedropper');
+            const dropdownButton = document.getElementById('dropdownButton');
+            const dropdownOptions = document.getElementById('dropdownOptions');
+            const colorSelector = document.getElementById('colorSelector');
+            const colorPicker = document.getElementById('colorPicker');
+            const selectedColorPreview = document.getElementById('selectedColorPreview');
+            const selectedColor = document.getElementById('selectedColor');
+
+            let hue = 0;
+            let saturation = 1;
+            let value = 1;
+            let alpha = 1;
+            let selectedFormat = {
+                id: 1,
+                value: "Hex"
+            };
+            let isOpacityEnabled = true;
+
+            selectedColorPreview.addEventListener('click', () => {
+                colorPicker.classList.toggle('hidden');
+            });
+
+            document.addEventListener('click', (event) => {
+                if (!colorSelectorWrapper.contains(event.target)) {
+                    colorPicker.classList.add('hidden');
+                    addToRecentColors(`#${selectedColor.value}`);
+                }
+            });
+
+            function updateColorGradient() {
+                const rgb = HSVtoRGB(hue, 1, 1);
+                colorGradient.style.background = `
+            linear-gradient(to bottom, rgba(0,0,0,0), black),
+            linear-gradient(to right, white, rgb(${rgb.r},${rgb.g},${rgb.b}))
+        `;
+            }
+
+            function updateColor() {
+                const rgb = HSVtoRGB(hue, saturation, value);
+                const hex = RGBtoHex(rgb.r, rgb.g, rgb.b);
+                const alphaHex = Math.round(alpha * 255).toString(16).padStart(2, '0');
+                const hsl = HSVtoHSL(hue, saturation, value);
+
+                colorCode.value = formatColor(rgb, hex + (isOpacityEnabled ? alphaHex : ''), hsl);
+                currentColor.style.backgroundColor = hex + (isOpacityEnabled ? alphaHex : '');
+
+                colorHandle.style.left = `${saturation * 100}%`;
+                colorHandle.style.top = `${(1 - value) * 100}%`;
+                colorHandle.style.backgroundColor = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
+
+                hueSlider.value = hue;
+                opacitySlider.value = alpha;
+                opacitySlider.title = `${alpha * 100}%`;
+
+                document.documentElement.style.setProperty('--selected-hue', `hsl(${hue * 360}, 100%, 50%)`);
+                document.documentElement.style.setProperty('--selected-color', `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`);
+                document.documentElement.style.setProperty('--selected-color-opacity', `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${alpha})`);
+
+                selectedColor.value = hex.toUpperCase().trim().replace('#', '') + (isOpacityEnabled ? alphaHex : '');
+                selectedColorPreview.style.backgroundColor = '#' + selectedColor.value;
+
+                document.getElementById('errorMessage').classList.add('hidden');
+            }
+
+            function formatColor(rgb, hex, hsl) {
+                const h = Math.round(hue * 360);
+                const s = Math.round(saturation * 100);
+                const v = Math.round(value * 100);
+                const l = Math.round(hsl.l);
+                const a = alpha.toFixed(2);
+
+                switch (selectedFormat.id) {
+                    case 1: return isOpacityEnabled ? hex.toUpperCase() : hex.slice(0, 7).toUpperCase();
+                    case 2: return isOpacityEnabled ? `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${a})` : `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
+                    case 3: return isOpacityEnabled ? `hsla(${h}, ${s}%, ${l}%, ${a})` : `hsl(${h}, ${s}%, ${l}%)`;
+                    case 4: return isOpacityEnabled ? `hsva(${h}, ${s}%, ${v}%, ${a})` : `hsv(${h}, ${s}%, ${v}%)`;
+                    default: return isOpacityEnabled ? hex.toUpperCase() : hex.slice(0, 7).toUpperCase();
+                }
+            }
+
+
+            function HSVtoRGB(h, s, v) {
+                let r, g, b, i, f, p, q, t;
+                i = Math.floor(h * 6);
+                f = h * 6 - i;
+                p = v * (1 - s);
+                q = v * (1 - f * s);
+                t = v * (1 - (1 - f) * s);
+                switch (i % 6) {
+                    case 0: r = v, g = t, b = p; break;
+                    case 1: r = q, g = v, b = p; break;
+                    case 2: r = p, g = v, b = t; break;
+                    case 3: r = p, g = q, b = v; break;
+                    case 4: r = t, g = p, b = v; break;
+                    case 5: r = v, g = p, b = q; break;
+                }
+                return {
+                    r: Math.round(r * 255),
+                    g: Math.round(g * 255),
+                    b: Math.round(b * 255)
+                };
+            }
+
+            function RGBtoHSV(r, g, b) {
+                r /= 255, g /= 255, b /= 255;
+                let max = Math.max(r, g, b), min = Math.min(r, g, b);
+                let h, s, v = max;
+                let d = max - min;
+                s = max === 0 ? 0 : d / max;
+                if (max === min) {
+                    h = 0; // achromatic
+                } else {
+                    switch (max) {
+                        case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+                        case g: h = (b - r) / d + 2; break;
+                        case b: h = (r - g) / d + 4; break;
+                    }
+                    h /= 6;
+                }
+                return { h, s, v };
+            }
+
+            function RGBtoHex(r, g, b) {
+                return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+            }
+
+            function hexToRGBA(hex) {
+                hex = hex.replace(/^#/, '');
+                if (hex.length === 3) {
+                    hex = hex.split('').map(char => char + char).join('');
+                }
+                let r = parseInt(hex.substring(0, 2), 16);
+                let g = parseInt(hex.substring(2, 4), 16);
+                let b = parseInt(hex.substring(4, 6), 16);
+                let a = hex.length === 8 ? parseInt(hex.substring(6, 8), 16) / 255 : 1;
+                return { r, g, b, a };
+            }
+
+            function HSVtoHSL(h, s, v) {
+                let l = v * (1 - s / 2);
+                let sl = (l === 0 || l === 1) ? 0 : (v - l) / Math.min(l, 1 - l);
+                return { h: h * 360, s: sl * 100, l: l * 100 };
+            }
+
+            function HSLtoHSV(h, s, l) {
+                h /= 360;
+                s /= 100;
+                l /= 100;
+                let v = l + s * Math.min(l, 1 - l);
+                let sv = v === 0 ? 0 : 2 * (1 - l / v);
+                return { h, s: sv, v };
+            }
+
+            function parseColor(input) {
+                input = input.toLowerCase().trim();
+                let match;
+                document.getElementById('errorMessage').classList.add('hidden');
+
+                // Hex
+                if (input.match(/^#?([0-9a-f]{3}|[0-9a-f]{6}|[0-9a-f]{8})$/)) {
+                    let { r, g, b, a } = hexToRGBA(input);
+                    let { h, s, v } = RGBtoHSV(r, g, b);
+                    selectedFormat = { id: 1, value: "Hex" };
+                    return { h, s, v, a };
+                }
+
+                // RGB / RGBA
+                match = input.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*(\d*\.?\d+))?\)$/);
+                if (match) {
+                    let r = parseInt(match[1]);
+                    let g = parseInt(match[2]);
+                    let b = parseInt(match[3]);
+                    let a = match[4] ? parseFloat(match[4]) : 1;
+
+                    if (!isValidRGB(r, g, b) || !isValidAlpha(a)) {
+                        showError('Invalid RGB or alpha value');
+                        return 0;
+                    }
+
+                    let { h, s, v } = RGBtoHSV(r, g, b);
+                    selectedFormat = { id: 2, value: match[4] ? "RGBa" : "RGB" };
+                    return { h, s, v, a };
+                }
+
+                // HSL / HSLA
+                match = input.match(/^hsla?\((\d+),\s*(\d+)%,\s*(\d+)%(?:,\s*(\d*\.?\d+))?\)$/);
+                if (match) {
+                    let h = parseInt(match[1]);
+                    let s = parseInt(match[2]);
+                    let l = parseInt(match[3]);
+                    let a = match[4] ? parseFloat(match[4]) : 1;
+
+                    if (!isValidHSL(h, s, l) || !isValidAlpha(a)) {
+                        showError('Invalid HSL or alpha value');
+                        return 0;
+                    }
+
+                    let { h: hue, s: saturation, v: value } = HSLtoHSV(h, s, l);
+                    selectedFormat = { id: 3, value: match[4] ? "HSLa" : "HSL" };
+                    return { h: hue, s: saturation, v: value, a };
+                }
+
+                // HSV / HSVA
+                match = input.match(/^hsva?\((\d+),\s*(\d+)%,\s*(\d+)%(?:,\s*(\d*\.?\d+))?\)$/);
+                if (match) {
+                    let h = parseInt(match[1]);
+                    let s = parseInt(match[2]);
+                    let v = parseInt(match[3]);
+                    let a = match[4] ? parseFloat(match[4]) : 1;
+
+                    if (!isValidHSV(h, s, v) || !isValidAlpha(a)) {
+                        showError('Invalid HSV or alpha value');
+                        return 0;
+                    }
+
+                    selectedFormat = { id: 4, value: match[4] ? "HSVa" : "HSV" };
+                    return { h: h / 360, s: s / 100, v: v / 100, a };
+                }
+
+                // If no match, show error
+                showError('Invalid color format');
+                return 0;
+            }
+
+            function isValidRGB(r, g, b) {
+                return r >= 0 && r <= 255 && g >= 0 && g <= 255 && b >= 0 && b <= 255;
+            }
+
+            function isValidHSL(h, s, l) {
+                return h >= 0 && h <= 360 && s >= 0 && s <= 100 && l >= 0 && l <= 100;
+            }
+
+            function isValidHSV(h, s, v) {
+                return h >= 0 && h <= 360 && s >= 0 && s <= 100 && v >= 0 && v <= 100;
+            }
+
+            function isValidAlpha(a) {
+                return a >= 0 && a <= 1;
+            }
+
+            function showError(message) {
+                const errorMessage = document.getElementById('errorMessage');
+                errorMessage.classList.remove('hidden');
+                errorMessage.querySelector('p').textContent = message;
+            }
+
+
+            function handleColorInput(e) {
+                if (e.key === 'Enter') {
+                    try {
+                        let colorInputValue;
+
+                        if (e.target === colorCode) {
+                            colorInputValue = colorCode.value;
+                        } else if (e.target === selectedColor) {
+                            colorInputValue = selectedColor.value;
+                        }
+
+                        let { h, s, v, a } = parseColor(colorInputValue);
+                        hue = h;
+                        saturation = s;
+                        value = v;
+                        alpha = a;
+
+                        updateColorGradient();
+                        updateColor();
+                        updateActiveOption();
+                    } catch (error) {
+                        console.error('Invalid color input:', error);
+                    }
+                }
+            }
+
+            function handleColorGradientInteraction(e) {
+                e.preventDefault();
+                const rect = colorGradient.getBoundingClientRect();
+                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+                saturation = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+                value = Math.max(0, Math.min(1, 1 - (clientY - rect.top) / rect.height));
+                updateColor();
+            }
+
+            function handleStart(e) {
+                e.preventDefault();
+                handleColorGradientInteraction(e);
+                document.addEventListener('mousemove', handleMove);
+                document.addEventListener('touchmove', handleMove);
+                document.addEventListener('mouseup', handleEnd);
+                document.addEventListener('touchend', handleEnd);
+            }
+
+            function handleMove(e) {
+                e.preventDefault();
+                handleColorGradientInteraction(e);
+            }
+
+            function handleEnd() {
+                document.removeEventListener('mousemove', handleMove);
+                document.removeEventListener('touchmove', handleMove);
+                document.removeEventListener('mouseup', handleEnd);
+                document.removeEventListener('touchend', handleEnd);
+            }
+
+            function updateColorFromInputs() {
+                hue = parseFloat(hueSlider.value);
+                alpha = parseFloat(opacitySlider.value);
+                updateColorGradient();
+                updateColor();
+            }
+
+            function updateActiveOption() {
+                const options = dropdownOptions.querySelectorAll("li");
+                options.forEach(option => {
+                    const isSelected = parseInt(option.getAttribute("data-value")) === selectedFormat.id;
+                    option.classList.toggle("bg-sky-400", isSelected);
+                    option.classList.toggle("text-white", isSelected);
+                    option.classList.toggle("hover:bg-sky-100", !isSelected);
+
+                    const formatName = option.textContent.trim().replace(/a$/, '');
+                    if (formatName !== 'Hex') {
+                        option.textContent = isOpacityEnabled ? formatName + 'a' : formatName;
+                    }
+                });
+                dropdownButton.querySelector("span").textContent = selectedFormat.value;
+            }
+
+            // Event Listeners
+            colorGradient.addEventListener('mousedown', handleStart);
+            colorGradient.addEventListener('touchstart', handleStart);
+            hueSlider.addEventListener('input', updateColorFromInputs);
+            opacitySlider.addEventListener('input', updateColorFromInputs);
+            colorCode.addEventListener('keydown', handleColorInput);
+            selectedColor.addEventListener('keydown', handleColorInput);
+
+            eyedropper.addEventListener('click', () => {
+                if (window.EyeDropper) {
+                    const eyeDropper = new window.EyeDropper();
+                    eyeDropper.open().then(result => {
+                        const { sRGBHex } = result;
+                        const { r, g, b, a } = hexToRGBA(sRGBHex);
+                        const { h, s, v } = RGBtoHSV(r, g, b);
+                        hue = h;
+                        saturation = s;
+                        value = v;
+                        alpha = a;
+                        isOpacityEnabled = sRGBHex.length === 9;
+                        updateColorGradient();
+                        updateColor();
+                        updateActiveOption();
+                    }).catch(e => {
+                        console.error(e);
+                    });
+                } else {
+                    alert('EyeDropper API is not supported in your browser.');
+                }
+            });
+
+            dropdownButton.addEventListener("click", () => {
+                const isExpanded = dropdownButton.getAttribute("aria-expanded") === "true";
+                dropdownButton.setAttribute("aria-expanded", !isExpanded);
+                dropdownOptions.classList.toggle("hidden");
+            });
+
+            dropdownOptions.addEventListener("click", (event) => {
+                const option = event.target.closest("li");
+                if (option) {
+                    selectedFormat = {
+                        id: parseInt(option.getAttribute("data-value")),
+                        value: option.textContent.trim(),
+                    };
+                    updateActiveOption();
+                    dropdownButton.setAttribute("aria-expanded", "false");
+                    dropdownOptions.classList.add("hidden");
+                    updateColor();
+                }
+            });
+
+            document.addEventListener("click", (event) => {
+                if (!colorPicker.contains(event.target)) {
+                    dropdownOptions.classList.add("hidden");
+                    dropdownButton.setAttribute("aria-expanded", "false");
+                }
+            });
+
+            function addToRecentColors(color) {
+                let recentColors = JSON.parse(localStorage.getItem('recentColors')) || [];
+                const index = recentColors.indexOf(color);
+                if (index !== -1) {
+                    recentColors = recentColors.filter(c => c !== color);
+                }
+                recentColors.unshift(color);
+                localStorage.setItem('recentColors', JSON.stringify(recentColors));
+                updateRecentColorsUI();
+            }
+
+            function updateRecentColorsUI() {
+                const recentColorsContainer = document.getElementById('recentColors');
+                recentColorsContainer.innerHTML = '';
+                const recentColors = JSON.parse(localStorage.getItem('recentColors')) || [];
+                if (recentColors.length === 0) {
+                    recentColorsContainer.innerHTML = '<p class="w-full text-center text-[12px] text-gray-500 py-1">No recent colors</p>';
+                } else {
+                    recentColors.forEach(color => {
+                        const colorElement = document.createElement('div');
+                        colorElement.className = 'w-5 h-5 rounded-md border hover:outline hover:outline-neutral-200 cursor-pointer';
+                        colorElement.style.backgroundColor = color;
+                        colorElement.addEventListener('click', () => {
+                            document.getElementById('colorCode').value = color;
+                            document.getElementById('colorCode').dispatchEvent(new KeyboardEvent('keydown', { 'key': 'Enter' }));
+                        });
+                        recentColorsContainer.appendChild(colorElement);
+                    });
+                }
+            }
+
+            document.getElementById('clearRecents').onclick = () => {
+                localStorage.removeItem('recentColors');
+                updateRecentColorsUI();
+            }
+
+            updateRecentColorsUI();
+
+            // Initialize
+            updateColorGradient();
+            updateColor();
+            updateActiveOption();
+        });
+    </script>
+</body>
+
+</html>
