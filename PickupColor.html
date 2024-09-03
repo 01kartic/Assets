@@ -545,6 +545,10 @@
             colorCode.addEventListener('keydown', handleColorInput);
             selectedColor.addEventListener('keydown', handleColorInput);
 
+            if (!window.EyeDropper) {
+                eyedropper.classList.add('hidden');
+            }
+
             eyedropper.addEventListener('click', () => {
                 if (window.EyeDropper) {
                     const eyeDropper = new window.EyeDropper();
@@ -566,10 +570,6 @@
                     alert('EyeDropper API is not supported in your browser.');
                 }
             });
-
-            if (window.EyeDropper) {
-                eyedropper.classList.remove('hidden');
-            }
 
             dropdownButton.addEventListener("click", () => {
                 const isExpanded = dropdownButton.getAttribute("aria-expanded") === "true";
